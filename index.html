@@ -1,85 +1,57 @@
 <!DOCTYPE html>
 <html lang="cs">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Stadion Skóre</title>
-
-  <!-- favicon ikona aplikace -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>🏟️ Stadion Skóre</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
-
-  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
-
-  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- <h1><img src="favicon.ico" alt="Ikona" style="width:16px; height:16px; vertical-align:middle;"> Stadion Skóre</h1> -->
+<div class="top-bar">
+  <button class="btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+  <h1>🏟️ Stadion Skóre</h1>
+  <button class="reset" onclick="resetAll()">RESET</button>
+</div>
 
-  <div class="top-bar">
-    <button class="btn" onclick="toggleFullscreen()">
-      ⛶ Fullscreen
-    </button>
+<div class="stadium">
 
-    <button class="reset" onclick="resetAll()">
-      RESET
-    </button>
+  <div class="team team-a">
+    <div class="controls">
+      <button class="plus btn-large" onclick="changeScore('A', 1)">+</button>
+      <button class="minus" onclick="changeScore('A', -1)">-</button>
+    </div>
+    <div class="team-content">
+      <input id="teamAName" value="Tým A">
+      <div class="score" id="scoreA">0</div>
+    </div>
   </div>
 
   <div class="timer">
-
-    <input type="number" id="minutesInput" min="1" placeholder="Minuty (např. 10)"
-      oninput="if(this.value < 1) this.value = '';">
-
+    <input type="number" id="minutesInput" min="1" placeholder="Minuty" oninput="if(this.value < 1) this.value = '';">
     <div id="timeDisplay">00:00</div>
-
-    <button class="plus" onclick="startTimer()">
-      Start
-    </button>
-
-    <button class="minus" onclick="pauseTimer()">
-      Pause
-    </button>
-
-  </div>
-
-  <div class="stadium">
-
-    <div class="team team-a">
-      <div class="controls">
-        <button class="plus btn-large" onclick="changeScore('A', 1)">+</button>
-        <button class="minus" onclick="changeScore('A', -1)">-</button>
-      </div>
-      <div class="team-content">
-        <input id="teamAName" value="Tým A">
-        <div class="score" id="scoreA">0</div>
-      </div>
+    <div class="timer-controls">
+      <button class="plus" onclick="startTimer()">Start</button>
+      <button class="minus" onclick="pauseTimer()">Pause</button>
     </div>
+  </div>
 
-    <div class="team team-b">
-      <div class="team-content">
-        <input id="teamBName" value="Tým B">
-        <div class="score" id="scoreB">0</div>
-      </div>
-      <div class="controls">
-        <button class="plus btn-large" onclick="changeScore('B', 1)">+</button>
-        <button class="minus" onclick="changeScore('B', -1)">-</button>
-      </div>
+  <div class="team team-b">
+    <div class="team-content">
+      <input id="teamBName" value="Tým B">
+      <div class="score" id="scoreB">0</div>
     </div>
-
+    <div class="controls">
+      <button class="plus btn-large" onclick="changeScore('B', 1)">+</button>
+      <button class="minus" onclick="changeScore('B', -1)">-</button>
+    </div>
   </div>
 
-  <div class="result" id="result">
-    0 : 0
-  </div>
+</div>
 
-  <script src="script.js"></script>
-
+<script src="script.js"></script>
 </body>
-
 </html>
