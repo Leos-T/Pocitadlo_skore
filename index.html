@@ -25,13 +25,13 @@
       <button class="minus" onclick="changeScore('A', -1)">-</button>
     </div>
     <div class="team-content">
-      <input type="text" id="teamAName" placeholder="Tým A" onkeydown="if(event.key === 'Enter') this.blur();">
+      <input type="text" id="teamAName" placeholder="Tým A" autocomplete="off" onkeydown="if(event.key === 'Enter') { event.preventDefault(); this.blur(); }">
       <div class="score" id="scoreA">0</div>
     </div>
   </div>
 
   <div class="timer">
-    <input type="number" id="minutesInput" min="1" placeholder="Minuty" oninput="if(this.value < 1) this.value = '';" onkeydown="if(event.key === 'Enter') this.blur();">
+    <input type="number" id="minutesInput" min="1" placeholder="Minuty" autocomplete="off" oninput="if(this.value < 1) this.value = '';" onkeydown="if(event.key === 'Enter') { event.preventDefault(); this.blur(); }">
     <div id="timeDisplay">00:00</div>
     <div class="timer-controls">
       <button class="plus" onclick="startTimer()">Start</button>
@@ -41,7 +41,7 @@
 
   <div class="team team-b">
     <div class="team-content">
-      <input type="text" id="teamBName" placeholder="Tým B" onkeydown="if(event.key === 'Enter') this.blur();">
+      <input type="text" id="teamBName" placeholder="Tým B" autocomplete="off" onkeydown="if(event.key === 'Enter') { event.preventDefault(); this.blur(); }">
       <div class="score" id="scoreB">0</div>
     </div>
     <div class="controls">

@@ -83,11 +83,23 @@ function playClickSound() {
   osc.stop(time + 0.05);
 }
 
-// WAKE LOCK
+// WAKE LOCK - Zajišťuje trvalé rozsvícení displeje
 async function enableWakeLock() {
-  if (!('wakeLock' in navigator)) return;
+  if (!('wakeLock' in navigator)) {
+    console.log("Wake Lock není podporován");
+    return;
+  }
   try {
+    // Pokud už zámek máme, podruhé ho nežádáme
+    if (wakeLock !== null) return;
+    
     wakeLock = await navigator.wakeLock.request("screen");
+    console.log("Wake Lock ÚSPĚŠNĚ AKTIVOVÁN - displej nezhasne!");
+    
+    wakeLock.addEventListener("release", () => {
+      wakeLock = null;
+      console.log("Wake Lock uvolněn");
+    });
   } catch (err) {
     console.log("Wake Lock chyba:", err);
   }
@@ -126,10 +138,10 @@ function tick() {
 }
 
 function startTimer() {
-  if (!running) {
-    enableWakeLock();
+  // 1. POJISTKA PROTI ZHASNUTÍ: Aktivujeme Wake Lock ihned na začátku spuštění!
+  enableWakeLock();
 
-    // Sjednocené volání celoobrazovkového režimu
+  if (!running) {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen({ navigationUI: "hide" }).catch(err => {});
     }
@@ -151,6 +163,11 @@ function startTimer() {
 function pauseTimer() {
   running = false;
   clearInterval(interval);
+  // Při pauze zámek uvolníme, aby se šetřila baterie, pokud se zápas přeruší na dlouho
+  if (wakeLock) {
+    wakeLock.release();
+    wakeLock = null;
+  }
 }
 
 function resetAll() {
@@ -164,7 +181,7 @@ function resetAll() {
   document.getElementById("minutesInput").value = "";
 }
 
-// FULLSCREEN - Opraveno pro skrytí navigační lišty
+// FULLSCREEN
 function toggleFullscreen() {
   if (!document.fullscreenElement) {
     document.documentElement.requestFullscreen({ navigationUI: "hide" }).catch(err => {});
