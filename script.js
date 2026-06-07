@@ -9,7 +9,7 @@ let running = false;
 // WAKE LOCK
 let wakeLock = null;
 
-// Globální proměnná pro sdílené audio
+// Globální audio
 let audioCtx = null;
 
 function getAudioContext() {
@@ -129,8 +129,9 @@ function startTimer() {
   if (!running) {
     enableWakeLock();
 
+    // Sjednocené volání celoobrazovkového režimu
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(err => {});
+      document.documentElement.requestFullscreen({ navigationUI: "hide" }).catch(err => {});
     }
 
     if (remainingSeconds === 0) {
@@ -163,10 +164,10 @@ function resetAll() {
   document.getElementById("minutesInput").value = "";
 }
 
-// FULLSCREEN
+// FULLSCREEN - Opraveno pro skrytí navigační lišty
 function toggleFullscreen() {
   if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen().catch(err => {});
+    document.documentElement.requestFullscreen({ navigationUI: "hide" }).catch(err => {});
   } else {
     document.exitFullscreen();
   }

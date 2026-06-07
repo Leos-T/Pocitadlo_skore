@@ -2,8 +2,8 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>🏟️ Stadion Skóre</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+  <title>Stadion Skóre</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
@@ -13,7 +13,7 @@
 
 <div class="top-bar">
   <button class="btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
-  <h1>🏟️ Stadion Skóre</h1>
+  <h1>Stadion Skóre</h1>
   <button class="reset" onclick="resetAll()">RESET</button>
 </div>
 
@@ -25,13 +25,13 @@
       <button class="minus" onclick="changeScore('A', -1)">-</button>
     </div>
     <div class="team-content">
-      <input id="teamAName" value="Tým A">
+      <input type="text" id="teamAName" placeholder="Tým A" onkeydown="if(event.key === 'Enter') this.blur();">
       <div class="score" id="scoreA">0</div>
     </div>
   </div>
 
   <div class="timer">
-    <input type="number" id="minutesInput" min="1" placeholder="Minuty" oninput="if(this.value < 1) this.value = '';">
+    <input type="number" id="minutesInput" min="1" placeholder="Minuty" oninput="if(this.value < 1) this.value = '';" onkeydown="if(event.key === 'Enter') this.blur();">
     <div id="timeDisplay">00:00</div>
     <div class="timer-controls">
       <button class="plus" onclick="startTimer()">Start</button>
@@ -41,7 +41,7 @@
 
   <div class="team team-b">
     <div class="team-content">
-      <input id="teamBName" value="Tým B">
+      <input type="text" id="teamBName" placeholder="Tým B" onkeydown="if(event.key === 'Enter') this.blur();">
       <div class="score" id="scoreB">0</div>
     </div>
     <div class="controls">

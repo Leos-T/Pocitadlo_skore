@@ -2,17 +2,22 @@
   box-sizing: border-box;
 }
 
+html, body {
+  background: #111;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Odstraní jakékoliv nechtěné pruhy a posuvníky */
+}
+
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-  margin: 0;
   padding: 5px;
-  background: #111;
   color: white;
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Zabrání rolování na mobilu */
 }
 
 h1 {
@@ -45,7 +50,6 @@ button {
 .minus { background: #e74c3c; }
 .reset { background: #555; }
 
-/* HLAVNÍ LAYOUT - roztažení na celou zbývající obrazovku */
 .stadium {
   display: flex;
   flex-direction: row;
@@ -57,12 +61,11 @@ button {
   height: calc(100vh - 70px);
 }
 
-/* TÝMY */
 .team {
   background: #1e1e1e;
   padding: 10px;
   border-radius: 12px;
-  flex: 2; /* Týmy budou širší než časovač */
+  flex: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -78,17 +81,23 @@ button {
   height: 100%;
 }
 
-/* Úprava políček pro jména týmů */
+/* Úprava políček */
 input[type="text"], input#teamAName, input#teamBName {
   width: 100%;
   padding: 10px;
-  font-size: 48px;
+  font-size: 22px;
   font-weight: bold;
   text-align: center;
-  background: #111; /* Tmavé pozadí */
-  color: #fff;       /* Bílé písmo */
+  background: #111;
+  color: #fff;
   border: 2px solid #333;
   border-radius: 8px;
+}
+
+/* Styl pro šedivý text nápovědy (placeholder) */
+input::placeholder {
+  color: #666;
+  font-weight: normal;
 }
 
 input:focus {
@@ -97,13 +106,12 @@ input:focus {
 }
 
 .score {
-  font-size: 22vh; /* Velikost skóre se přizpůsobí výšce displeje */
+  font-size: 22vh;
   font-weight: bold;
   line-height: 1;
   margin-top: 5px;
 }
 
-/* OVLÁDÁNÍ SKÓRE */
 .controls {
   display: flex;
   flex-direction: column;
@@ -115,19 +123,18 @@ input:focus {
 .btn-large {
   font-size: 32px;
   padding: 25px 20px;
-  flex-grow: 2; /* Plus je výrazně větší než mínus */
+  flex-grow: 2;
 }
 
 .controls .minus {
   padding: 10px 20px;
 }
 
-/* ČASOVAČ UPROSTŘED */
 .timer {
   background: #252525;
   padding: 10px;
   border-radius: 12px;
-  flex: 1.2; /* Užší blok pro čas */
+  flex: 1.2;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -147,11 +154,11 @@ input:focus {
 }
 
 #timeDisplay {
-  font-size: 8vh; /* Přizpůsobí se výšce displeje */
+  font-size: 8vh;
   font-weight: bold;
   font-family: monospace;
   margin: 5px 0;
-  color: #f1c40f; /* Žlutý retro čas jako na stadionech */
+  color: #f1c40f;
 }
 
 .timer-controls {
