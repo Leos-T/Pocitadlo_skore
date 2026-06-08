@@ -1,5 +1,5 @@
 // Verze v3 – zajistí stažení ikon a aktualizaci v tabletu
-const CACHE_NAME = "stadion-skore-v3";
+const CACHE_NAME = "stadion-skore-v7";
 
 const FILES_TO_CACHE = [
   "./",
