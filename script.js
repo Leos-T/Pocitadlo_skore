@@ -83,23 +83,12 @@ function playClickSound() {
   osc.stop(time + 0.05);
 }
 
-// WAKE LOCK - Zajišťuje trvalé rozsvícení displeje
+// WAKE LOCK
 async function enableWakeLock() {
-  if (!('wakeLock' in navigator)) {
-    console.log("Wake Lock není podporován");
-    return;
-  }
+  if (!('wakeLock' in navigator)) return;
   try {
-    // Pokud už zámek máme, podruhé ho nežádáme
     if (wakeLock !== null) return;
-    
     wakeLock = await navigator.wakeLock.request("screen");
-    console.log("Wake Lock ÚSPĚŠNĚ AKTIVOVÁN - displej nezhasne!");
-    
-    wakeLock.addEventListener("release", () => {
-      wakeLock = null;
-      console.log("Wake Lock uvolněn");
-    });
   } catch (err) {
     console.log("Wake Lock chyba:", err);
   }
@@ -138,7 +127,6 @@ function tick() {
 }
 
 function startTimer() {
-  // 1. POJISTKA PROTI ZHASNUTÍ: Aktivujeme Wake Lock ihned na začátku spuštění!
   enableWakeLock();
 
   if (!running) {
@@ -160,16 +148,17 @@ function startTimer() {
   }
 }
 
+// PAUSE
 function pauseTimer() {
   running = false;
   clearInterval(interval);
-  // Při pauze zámek uvolníme, aby se šetřila baterie, pokud se zápas přeruší na dlouho
   if (wakeLock) {
     wakeLock.release();
     wakeLock = null;
   }
 }
 
+// RESET
 function resetAll() {
   scoreA = 0;
   scoreB = 0;
@@ -187,6 +176,33 @@ function toggleFullscreen() {
     document.documentElement.requestFullscreen({ navigationUI: "hide" }).catch(err => {});
   } else {
     document.exitFullscreen();
+  }
+}
+
+// BEZPEČNÉ OVLÁDÁNÍ VIRTUÁLNÍ KLÁVESNICE
+function handleEnter(event) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    try {
+      // 1. Vezmeme políčko, na kterém zrovna jsme, a donutíme ho schovat klávesnici
+      const activeElement = event.target;
+      if (activeElement) {
+        activeElement.blur();
+      }
+
+      // 2. POJISTKA PROTI PŘESKOČENÍ NA MINUTY:
+      // Na chvilku zamkneme políčko minut, aby na něj systém nemohl automaticky skočit
+      const minutesInput = document.getElementById("minutesInput");
+      if (minutesInput) {
+        minutesInput.readOnly = true;
+        // Za malý moment (0.1 sekundy) políčko zase odemkneme pro ruční zápis
+        setTimeout(() => {
+          minutesInput.readOnly = false;
+        }, 100);
+      }
+    } catch (e) {
+      console.log("Chyba při zavírání klávesnice:", e);
+    }
   }
 }
 
