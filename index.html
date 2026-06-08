@@ -31,7 +31,7 @@
   </div>
 
   <div class="timer">
-    <input type="number" id="minutesInput" min="1" placeholder="Minuty" autocomplete="off" oninput="if(this.value < 1) this.value = '';" onkeydown="handleEnter(event)">
+    <input type="text" inputmode="numeric" id="minutesInput" placeholder="Minuty" autocomplete="off" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onkeydown="handleEnter(event)">
     <div id="timeDisplay">00:00</div>
     <div class="timer-controls">
       <button class="plus" onclick="startTimer()">Start</button>

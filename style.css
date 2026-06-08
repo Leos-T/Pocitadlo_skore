@@ -85,7 +85,7 @@ button {
 input[type="text"], input#teamAName, input#teamBName {
   width: 100%;
   padding: 10px;
-  font-size: 22px;
+  font-size: 40px;
   font-weight: bold;
   text-align: center;
   background: #111;
@@ -106,7 +106,7 @@ input:focus {
 }
 
 .score {
-  font-size: 22vh;
+  font-size: 25vh;
   font-weight: bold;
   line-height: 1;
   margin-top: 5px;

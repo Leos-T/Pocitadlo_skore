@@ -143,22 +143,27 @@ function startTimer() {
       remainingSeconds = min * 60;
     }
 
+    // OCHRANA: Při spuštění času uzamkneme políčko minut pro zápis
+    document.getElementById("minutesInput").disabled = true;
+
     running = true;
     interval = setInterval(tick, 1000);
   }
 }
 
-// PAUSE
 function pauseTimer() {
   running = false;
   clearInterval(interval);
+  
+  // Odmkneme políčko minut, aby bylo možné čas v pauze ručně upravit
+  document.getElementById("minutesInput").disabled = false;
+
   if (wakeLock) {
     wakeLock.release();
     wakeLock = null;
   }
 }
 
-// RESET
 function resetAll() {
   scoreA = 0;
   scoreB = 0;
@@ -168,6 +173,9 @@ function resetAll() {
   remainingSeconds = 0;
   document.getElementById("timeDisplay").innerText = "00:00";
   document.getElementById("minutesInput").value = "";
+  
+  // Při kompletním resetu políčko minut samozřejmě odemkneme
+  document.getElementById("minutesInput").disabled = false;
 }
 
 // FULLSCREEN
@@ -184,21 +192,9 @@ function handleEnter(event) {
   if (event.key === 'Enter') {
     event.preventDefault();
     try {
-      // 1. Vezmeme políčko, na kterém zrovna jsme, a donutíme ho schovat klávesnici
       const activeElement = event.target;
       if (activeElement) {
-        activeElement.blur();
-      }
-
-      // 2. POJISTKA PROTI PŘESKOČENÍ NA MINUTY:
-      // Na chvilku zamkneme políčko minut, aby na něj systém nemohl automaticky skočit
-      const minutesInput = document.getElementById("minutesInput");
-      if (minutesInput) {
-        minutesInput.readOnly = true;
-        // Za malý moment (0.1 sekundy) políčko zase odemkneme pro ruční zápis
-        setTimeout(() => {
-          minutesInput.readOnly = false;
-        }, 100);
+        activeElement.blur(); // Schová klávesnici
       }
     } catch (e) {
       console.log("Chyba při zavírání klávesnice:", e);
